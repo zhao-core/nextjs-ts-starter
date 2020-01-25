@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as classnames from 'classnames';
+import classnames from 'classnames';
 import * as css from './Home.css';
 import { Nav } from './Layout/Nav';
 

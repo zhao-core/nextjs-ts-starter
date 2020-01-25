@@ -1,4 +1,6 @@
-import { Layout } from '../src/components/Layout/Layout';
-const Home = () => <Layout />;
+import { Button } from 'antd';
+const Home = () => (
+  <Button>CLICK</Button>
+);
 
 export default Home;

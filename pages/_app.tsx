@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import App, { Container } from 'next/app';
 import { getStore } from '../src/store';
 import { Layout } from '../src/components/Layout/Layout';
-import 'antd/dist/antd.min.css';
+import '../assets/css/styles.less';
 
 export default class extends App {
   static async getInitialProps({ Component, router, ctx }) {
@@ -32,7 +32,7 @@ export default class extends App {
     return (
       <Container>
         <Provider store={getStore(undefined, props.server)}>
-         <Layout>
+          <Layout>
             <Component {...pageProps} />
           </Layout>
         </Provider>

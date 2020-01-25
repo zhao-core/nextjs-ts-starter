@@ -3,6 +3,7 @@ interface Window {
   __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any
   __REACT_DEVTOOLS_GLOBAL_HOOK__: any
 }
+declare module '*.less';
 declare module '*.png' {
   const resource: string
   export = resource

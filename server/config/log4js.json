@@ -1,0 +1,17 @@
+{
+  "appenders": {
+    "startupLogs": { "type": "file", "filename": "./logs/startup.log" },
+    "console": { "type": "console" },
+    "httpLog": { "type": "dateFile", "filename": "./logs/http.log" },
+    "appLogs": { "type": "file", "filename": "./logs/app.log" },
+    "errorLogs": { "type": "file", "filename": "./logs/error.log" }
+  },
+  "categories": {
+    "startup": { "appenders": ["startupLogs"], "level": "info" },
+    "info": { "appenders": ["console"], "level": "trace" },
+    "http": { "appenders": ["httpLog"], "pattern": "-yyyy-MM-dd", "level": "info" },
+    "app": { "appenders": ["appLogs"], "level": "info" },
+    "error": { "appenders": ["errorLogs"], "level": "error" },
+    "default": { "appenders": ["console", "startupLogs"], "level": "trace" }
+  }
+}

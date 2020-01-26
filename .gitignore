@@ -11,6 +11,8 @@ stats.json
 /dist-sourcemap
 whistle.log
 /.next
+/logs
+/.clinic
 
 # ci
 qci-info

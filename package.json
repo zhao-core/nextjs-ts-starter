@@ -8,8 +8,12 @@
     "antd": "^3.26.7",
     "classnames": "^2.2.6",
     "dayjs": "^1.8.19",
+    "koa": "^2.11.0",
+    "koa-log4": "^2.3.2",
+    "koa-router": "^8.0.6",
     "less": "^3.10.3",
     "next": "^9.2.0",
+    "pm2": "^3.5.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-ga": "^2.7.0",
@@ -17,7 +21,8 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "ts-node": "^8.6.2"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.6",
@@ -27,6 +32,8 @@
     "@types/node": "^8.10.14",
     "@types/react": "^16.7.13",
     "@types/react-redux": "^6.0.0",
+    "@types/koa": "^2.0.48",
+    "@types/koa-router": "^7.0.40",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "babel-plugin-import": "^1.13.0",
@@ -42,7 +49,12 @@
     "dev": "next -p 4200",
     "build": "NODE_ENV=production next build",
     "start": "npm run build && next start -p 4200",
-    "analyzer": "ANALYZE=true && npm run build "
+    "analyzer": "ANALYZE=true && npm run build ",
+    "start:local": "node .next/server",
+    "start:koa": "ts-node --project tsconfig.server.json server/index.ts",
+    "stop": "pm2 stop all",
+    "start:dev": "pm2 start pm2.config.dev.json",
+    "start:prod": "pm2 start pm2.config.prod.json"
   },
   "keywords": [],
   "author": "jsl6",

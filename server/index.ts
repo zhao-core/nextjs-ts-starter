@@ -1,7 +1,10 @@
 import Koa from 'koa';
-import Router from 'koa-router';
 import next from 'next';
-import log4js from './common/logger-Utils';
+import router from './router';
+import NextMiddleware from 'koa-next-middleware';
+import log4js from './common/logger-utils';
+import logger from './middleware/logger';
+import ssrCache from './common/cache-utils';
 
 const port = parseInt((process as any).env.PORT, 10) || 4000;
 const dev = process.env.NODE_ENV !== 'production';
@@ -10,14 +13,8 @@ const handle = nextApp.getRequestHandler();
 
 nextApp.prepare().then(() => {
   const server = new Koa();
-  const router = new Router();
   const appLogger = log4js.getLogger('kao-app');
   server.use(log4js.koaLogger(log4js.getLogger('http'), { level: 'auto' }));
-
-  // server.use(koaBunyanLogger(bunyan.createLogger({
-  // name: 'next-koa-ts', level: 'debug', serializers: bunyan.stdSerializers
-  // })));
-  // server.use(koaBunyanLogger.requestLogger());
 
   router.get('/home', async (ctx) => {
     const log = log4js.getLogger('home');
@@ -41,6 +38,7 @@ nextApp.prepare().then(() => {
     await next();
   });
 
+  server.use(logger());
   server.use(router.routes());
   server.listen(port, () => {
     appLogger.info(`> Ready on http://localhost:${port}`);

@@ -11,7 +11,10 @@
       "env": {
         "NODE_ENV": "production",
         "PORT": 8000
-      }
+      },
+      "error_file": "./logs/err.log",
+      "merge_logs": true,
+      "log_date_format": "YYYY-MM-DD HH:mm Z"
     }
   ]
 }

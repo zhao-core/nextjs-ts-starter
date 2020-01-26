@@ -8,10 +8,18 @@
       "watch": true,
       "exec_mode": "cluster",
       "instances": "max",
+      "ignore_watch": [
+        "node_modules",
+        "logs",
+        "static"
+      ],
       "env": {
         "NODE_ENV": "development",
         "PORT": 3000
-      }
+      },
+      "error_file": "./logs/err.log",
+      "merge_logs": true,
+      "log_date_format": "YYYY-MM-DD HH:mm Z"
     }
   ]
 }

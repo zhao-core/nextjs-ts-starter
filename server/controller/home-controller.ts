@@ -1,5 +1,6 @@
 import { Context } from 'koa';
 import { homeService } from '../service';
+import { getVal ,setVal } from '../common/redis-cli';
 
 class HomeController {
   public static async index(ctx: Context) {
@@ -14,6 +15,17 @@ class HomeController {
       success: true,
       result: {
         num: 5
+      }
+    };
+  }
+
+  public static async redis(ctx: Context) {
+    // await setVal('abc', 123);
+    const num = await getVal('abc');
+    ctx.body = {
+      success: true,
+      result: {
+        num
       }
     };
   }

@@ -7,7 +7,7 @@ import { Layout } from '../src/components/Layout/Layout';
 import '../assets/css/styles.less';
 
 export default class extends App {
-  static async getInitialProps({ Component, router, ctx }) {
+  static async getInitialProps({Component, router, ctx }) {
     const server = !!ctx.req;
     const store = getStore(undefined, server);
     const state = store.getState();
@@ -30,13 +30,11 @@ export default class extends App {
     const { Component, pageProps } = props;
 
     return (
-      <Container>
         <Provider store={getStore(undefined, props.server)}>
           <Layout>
             <Component {...pageProps} />
           </Layout>
         </Provider>
-      </Container>
     );
   }
 }

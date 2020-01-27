@@ -29,7 +29,7 @@ function HACK_removeMinimizeOptionFromCssLoaders(config) {
   });
 }
 
-module.exports = withCss({
+const config = withCss({
   webpack(config) {
     HACK_removeMinimizeOptionFromCssLoaders(config);
     if (process.env.ANALYZE) {
@@ -44,3 +44,9 @@ module.exports = withCss({
     return config;
   },
 });
+
+config.generateBuildId = async () => {
+  return 'my-build-id';
+}
+
+module.exports = config;

@@ -15,7 +15,7 @@
       ],
       "env": {
         "NODE_ENV": "development",
-        "PORT": 3000
+        "PORT": 4200
       },
       "error_file": "./logs/err.log",
       "merge_logs": true,

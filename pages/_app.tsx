@@ -2,9 +2,18 @@ import 'isomorphic-fetch';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import App, { Container } from 'next/app';
+import Router from 'next/router';
+import NProgress from 'nprogress';
 import { getStore } from '../src/store';
 import { Layout } from '../src/components/Layout/Layout';
 import '../assets/css/styles.less';
+
+Router.events.on('routeChangeStart', (url) => {
+  console.log(`Loading: ${url}`);
+  NProgress.start();
+});
+Router.events.on('routeChangeComplete', () => NProgress.done());
+Router.events.on('routeChangeError', () => NProgress.done());
 
 export default class extends App {
   static async getInitialProps({Component, router, ctx }) {

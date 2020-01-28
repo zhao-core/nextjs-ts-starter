@@ -1,37 +1,33 @@
-const withCss = require('@zeit/next-less');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const lessToJS = require('less-vars-to-js');
 const fs = require('fs');
 const path = require('path');
-
+const withLess = require('@zeit/next-less');
+const withCss = require('@zeit/next-css');
+const withPlugins = require('next-compose-plugins');
 const themeVariables = lessToJS(fs.readFileSync(path.resolve(__dirname, 'assets/css/custom.less'), 'utf8'));
 
-// fix: prevents error when .css files are required by node
-if (typeof require !== 'undefined') {
-  require.extensions['.less'] = (file) => {};
-}
-
-function HACK_removeMinimizeOptionFromCssLoaders(config) {
-  console.warn('HACK: Removing `minimize` option from `css-loader` entries in Webpack config');
-  config.module.rules.forEach((rule) => {
-    if (Array.isArray(rule.use)) {
-      rule.use.forEach((u) => {
-        if (u.loader === 'css-loader' && u.options) {
-          delete u.options.minimize;
-        }
-        if (u.loader === 'less-loader') {
-          u.options = u.options || {};
-          u.options.javascriptEnabled = true;
-          u.options.modifyVars = themeVariables;
-        }
+module.exports = withPlugins([withLess, withCss], {
+  lessLoaderOptions: {
+    //如果是antd就需要，antd-mobile不需要
+    javascriptEnabled: true,
+    modifyVars: themeVariables,
+  },
+  cssModules: true,
+  cssLoaderOptions: {
+    camelCase: true,
+    localIdentName: '[local]___[hash:base64:5]',
+  },
+  webpack(config) {
+    if (config.externals) {
+      const includes = [/antd/];
+      config.externals = config.externals.map((external) => {
+        if (typeof external !== 'function') return external;
+        return (ctx, req, cb) => {
+          return includes.find((include) => (req.startsWith('.') ? include.test(path.resolve(ctx, req)) : include.test(req))) ? cb() : external(ctx, req, cb);
+        };
       });
     }
-  });
-}
-
-const config = withCss({
-  webpack(config) {
-    HACK_removeMinimizeOptionFromCssLoaders(config);
     if (process.env.ANALYZE) {
       config.plugins.push(
         new BundleAnalyzerPlugin({
@@ -43,10 +39,7 @@ const config = withCss({
     }
     return config;
   },
+  generateBuildId : async () => {
+    return 'my-build-id';
+  }
 });
-
-config.generateBuildId = async () => {
-  return 'my-build-id';
-}
-
-module.exports = config;

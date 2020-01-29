@@ -29,6 +29,36 @@ class HomeController {
       }
     };
   }
+
+  public static async queryUser(ctx: Context) {
+    const users = await homeService.queryUser('');
+    ctx.body = {
+      success: true,
+      result: {
+        users
+      }
+    };
+  }
+
+  public static async queryOneUser(ctx: Context) {
+    const users = await homeService.queryOneUser();
+    ctx.body = {
+      success: true,
+      result: {
+        users
+      }
+    };
+  }
+
+  public static async queryAllUser(ctx: Context) {
+    const users = await homeService.queryAllUser();
+    ctx.body = {
+      success: true,
+      result: {
+        users
+      }
+    };
+  }
 }
 
 export default HomeController;

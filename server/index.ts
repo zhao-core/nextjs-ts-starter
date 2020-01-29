@@ -15,11 +15,6 @@ nextApp.prepare().then(() => {
 
   dev && server.use(log4js.koaLogger(log4js.getLogger('http'), { level: 'auto' }));
 
-  router.get('/home', async (ctx) => {
-    await nextApp.render(ctx.req, ctx.res, '/home', ctx.query);
-    ctx.respond = false;
-  });
-
   router.get('*', async (ctx) => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
@@ -35,7 +30,7 @@ nextApp.prepare().then(() => {
   //     cache: dev ? null : ssrCache,
   //   })
   // );
-  server.use(logger());
+  // server.use(logger());
   server.use(router.routes());
 
   server.listen(port, () => {

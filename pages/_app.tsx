@@ -9,7 +9,6 @@ import { Layout } from '../src/components/Layout/Layout';
 import '../assets/css/styles.less';
 
 Router.events.on('routeChangeStart', (url) => {
-  console.log(`Loading: ${url}`);
   NProgress.start();
 });
 Router.events.on('routeChangeComplete', () => NProgress.done());

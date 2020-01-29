@@ -1,6 +1,8 @@
 import Redis from 'ioredis';
 import { redis } from '../config'
+import log4js from './logger-utils'
 
+const logger = log4js.getLogger('redis');
 export const redisClient = new Redis({
   port: redis.port,
   host: redis.host, //如果不是本机地址，记得替换
@@ -13,7 +15,7 @@ export const redisClient = new Redis({
   },
   reconnectOnError: function(err) {
     let targetError = 'READONLY';
-    console.error('err:%j', err);
+    logger.error(err);
     if (err.message.slice(0, targetError.length) === targetError) {
       // Only reconnect when the error starts with "READONLY"
       return true; // or `return 1;`
@@ -24,18 +26,18 @@ export const redisClient = new Redis({
 // redis.on xxx是用于监听其事件的，其他的事件类型可参考https://github.com/luin/ioredis  => Events模块
 redisClient.on('connect', (err) => {
   if (err) {
-    console.error(`failed to connect redis ${redis.host}:${redis.port}`);
+    logger.error(`failed to connect redis ${redis.host}:${redis.port}`);
   } else {
-    console.log(`redis ${redis.host}:${redis.port} connected`);
+    logger.info(`redis ${redis.host}:${redis.port} connected`);
   }
 });
 
 redisClient.on('error', (err) => {
   if (err) {
-    console.error('failed to start redis');
+    logger.error('failed to start redis');
     // throw new Error('failed to start redis');
   } else {
-    console.log('redis ready for service');
+    logger.info(`redis ${redis.host}:${redis.port} ready for service`);
   }
 });
 
